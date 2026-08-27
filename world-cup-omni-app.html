@@ -539,6 +539,7 @@ var WCData = (function () {
             maybeDone();
           });
         });
+        omni.runQueries(keys.map(function (k) { return NAMES[k]; }));
       });
     });
   }
