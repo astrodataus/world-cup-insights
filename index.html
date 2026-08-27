@@ -500,40 +500,46 @@ var WCData = (function () {
   }
 
   function loadOmni() {
+    /* Rows arrive from saved workbook queries through omni.query(name).onData.
+       Keys come prefixed with the view name ("wc_shots.player"), onData fires
+       on load and again on refilter, and an empty payload can precede the real
+       rows. Counts are asserted against the shipped snapshot so silent
+       truncation cannot pass. */
     var NAMES = { shots: 'Shot Map', finishing: 'Player Finishing Metrics', radar: 'Player Profile Radar', creators: 'Creator Leaderboard' };
     var EXPECT = {  };
     return new Promise(function (resolve, reject) {
-      var out = {}, done = {}, keys = Object.keys(NAMES);
+      var out = {}, finished = false, keys = Object.keys(NAMES);
       var timer = setTimeout(function () {
-        var missing = keys.filter(function (k) { return !done[k]; }).map(function (k) { return NAMES[k]; });
+        if (finished) return;
+        finished = true;
+        var missing = keys.filter(function (k) { return !out[k]; }).map(function (k) { return NAMES[k]; });
         reject(new Error('Timed out waiting for saved queries: ' + missing.join(', ') + '. Check the workbook has queries with these exact names.'));
       }, 60000);
-      function ready() {
-        if (keys.every(function (k) { return done[k]; })) {
-          clearTimeout(timer);
-          for (var k in EXPECT) {
-            if (out[k] && EXPECT[k] && out[k].length !== EXPECT[k]) {
-              return reject(new Error(NAMES[k] + ' returned ' + out[k].length + ' rows, expected ' + EXPECT[k] + '. Check the saved query row limit.'));
-            }
-          }
-          resolve(assemble(out));
-        }
+      function maybeDone() {
+        if (finished) return;
+        if (!keys.every(function (k) { return out[k]; })) return;
+        finished = true;
+        clearTimeout(timer);
+        resolve(assemble(out));
       }
-      omni.ready.then ? omni.ready.then(go) : go();
-      function go() {
+      omni.ready.then(function () {
         keys.forEach(function (k) {
-          omni.query(NAMES[k], {
-            onData: function (d) {
-              if (d && d.status && d.status !== 'success' && d.status !== 'complete' && d.status !== 'done') return;
-              var rows = (d && (d.data || d.rows)) || [];
-              if (!rows.length && !out[k]) return; /* empty payload can precede rows */
-              out[k] = rows;
-              done[k] = true;
-              ready();
+          omni.query(NAMES[k]).onData(function (d) {
+            if (finished) return;
+            if (d && d.status === 'error') { finished = true; clearTimeout(timer); reject(new Error('Query failed: ' + NAMES[k])); return; }
+            if (d && d.status && d.status !== 'complete' && d.status !== 'success') return;
+            var rows = (d && (d.data || d.rows)) || (Array.isArray(d) ? d : []);
+            if (!rows.length) return; /* empty payload before the real rows */
+            if (EXPECT[k] && rows.length !== EXPECT[k]) {
+              finished = true; clearTimeout(timer);
+              reject(new Error(NAMES[k] + ' returned ' + rows.length + ' rows, expected ' + EXPECT[k] + '. Check the saved query row limit.'));
+              return;
             }
+            out[k] = rows;
+            maybeDone();
           });
         });
-      }
+      });
     });
   }
 
