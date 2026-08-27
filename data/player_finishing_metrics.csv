@@ -1,4 +1,4 @@
-ee_sandbox_ee_fifa_parsed_players_parsed_name,position_group,ee_sandbox_ee_fifa_parsed_teams_parsed_name,minutes_played,goals,xg,assists,xa,matches_played
+name,position_group,team,minutes_sum,goals_sum,expected_goals_sum,assists_sum,expected_assists_sum,matches_played
 Lionel Messi,Forward,Argentina,1790,16,12.114,9,6.025,19
 Kylian Mbappé,Forward,France,1840,22,12.017,6,2.517,22
 Harry Kane,Forward,England,1631,14,6.076,4,1.778,20

@@ -1,4 +1,4 @@
-ee_sandbox_ee_fifa_parsed_players_parsed_name,position_group,ee_sandbox_ee_fifa_parsed_teams_parsed_name,minutes_played,matches_played,key_passes,big_chances_created,assists,xa,assists_xa
+name,position_group,team,minutes_sum,matches_played,key_passes_sum,big_chances_created_sum,assists_sum,expected_assists_sum,assists_minus_xa
 Lionel Messi,Forward,Argentina,1790,19,57,18,9,6.025,2.9749999999999996
 Kevin De Bruyne,Midfielder,Belgium,1203,16,42,7,2,1.7850000000000001,0.21499999999999986
 Kylian Mbappé,Forward,France,1840,22,38,6,6,2.517,3.483

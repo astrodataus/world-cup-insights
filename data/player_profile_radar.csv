@@ -1,4 +1,4 @@
-ee_sandbox_ee_fifa_parsed_players_parsed_name,position_group,ee_sandbox_ee_fifa_parsed_teams_parsed_name,avg_rating,duel_win,dribble_success,tackle_success,passes_per_90,minutes_played,matches_played
+name,position_group,team,avg_rating,duel_win_pct,dribble_success_pct,tackle_success_pct,passes_per_90,minutes_sum,matches_played
 Kylian Mbappé,Forward,France,7.75,0.454545,0.510949,1,28.711957,1840,22
 Ousmane Dembélé,Forward,France,7.273684210526315,0.490385,0.459459,0.55,39.402985,1206,22
 Jordan Henderson,Midfielder,England,6.88,0.507692,,0.538462,52.989556,766,20

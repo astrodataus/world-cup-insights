@@ -1,4 +1,4 @@
-tournament_year,matchup,round_name,team,shooter,time_minute,player_x,player_y,xg,shot_type,situation,body_part,is_goal
+tournament_year,matchup,round_name,team,player,time_minute,player_x,player_y,xg,shot_type,situation,body_part,is_goal
 2018,Argentina vs Croatia,,Croatia,Ivan Rakitić,90,21.4,50.3,,save,fast-break,right-foot,false
 2018,Argentina vs Croatia,,Croatia,Luka Modrić,80,23.6,59.3,,goal,assisted,right-foot,true
 2018,Argentina vs Croatia,,Croatia,Mario Mandžukić,33,4,42.9,,miss,assisted,head,false
