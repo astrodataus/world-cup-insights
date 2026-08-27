@@ -901,6 +901,35 @@ var WCData = (function () {
 
       root.innerHTML = html;
       bindYearChips(root);
+
+      /* stat tile drill-ins */
+      var panel = root.querySelector('#wc-tour-drill');
+      var tiles = root.querySelectorAll('.wc-stat-drill');
+      var openKey = null;
+      function toggleDrill(tile) {
+        var key = tile.getAttribute('data-drill');
+        for (var i = 0; i < tiles.length; i++) {
+          tiles[i].classList.remove('wc-stat-open');
+          tiles[i].setAttribute('aria-expanded', 'false');
+        }
+        if (openKey === key) {
+          openKey = null;
+          panel.hidden = true;
+          panel.innerHTML = '';
+          return;
+        }
+        openKey = key;
+        panel.innerHTML = TOUR_DRILLS[key]();
+        panel.hidden = false;
+        tile.classList.add('wc-stat-open');
+        tile.setAttribute('aria-expanded', 'true');
+      }
+      Array.prototype.forEach.call(tiles, function (tile) {
+        tile.addEventListener('click', function () { toggleDrill(tile); });
+        tile.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDrill(tile); }
+        });
+      });
     }
   };
 
