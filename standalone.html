@@ -677,15 +677,26 @@ var WCData = (function () {
     U.on(document, 'keydown', function (e) { if (e.key === 'Escape') modal.hidden = true; });
   }
 
-  /* ---- router ---- */
+  /* ---- router ----
+     Inside a published Omni app the page runs in a sandboxed srcdoc iframe
+     with an opaque origin: touching location.hash counts as navigating away
+     and the sandbox stops the app. Detect that and route entirely in memory,
+     intercepting hash-link clicks; the URL bar is only used when we own it. */
+  var SANDBOXED = (typeof omni !== 'undefined');
+  try { if (window.origin === 'null') SANDBOXED = true; } catch (e) { SANDBOXED = true; }
+  var memRoute = { view: 'tournament', param: null };
   var router = TC.router = {
     parse: function () {
+      if (SANDBOXED) return { view: memRoute.view, param: memRoute.param };
       var h = (location.hash || '#/tournament').replace(/^#\/?/, '');
       var segs = h.split('/');
       return { view: segs[0] || 'tournament', param: segs.slice(1).join('/') || null };
     },
     navigate: function (view, param) {
-      location.hash = '#/' + view + (param ? '/' + param : '');
+      memRoute = { view: view, param: param || null };
+      if (SANDBOXED) { router.render(); return; }
+      var h = '#/' + view + (param ? '/' + param : '');
+      if (location.hash === h) router.render(); else location.hash = h;
     },
     render: function () {
       var r = router.parse();
@@ -1290,7 +1301,16 @@ var WCData = (function () {
     initTheme();
     initScenario();
     U.qs('#wc-meta-line').textContent = 'Tournaments ' + TC.data.meta.years.join(' · ') + ' — ' + U.fmt(TC.data.shots.length) + ' shots';
-    window.addEventListener('hashchange', router.render);
+    /* hash links route through the router so the sandbox never sees a
+       navigation; outside the sandbox the URL still updates normally */
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href^="#/"]') : null;
+      if (!a) return;
+      e.preventDefault();
+      var segs = a.getAttribute('href').replace(/^#\/?/, '').split('/');
+      router.navigate(segs[0] || 'tournament', segs.slice(1).join('/') || null);
+    });
+    if (!SANDBOXED) window.addEventListener('hashchange', router.render);
     router.render();
   }
 
