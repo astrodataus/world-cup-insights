@@ -163,10 +163,12 @@ body{
 
 /* ---- cards, stats ---- */
 .wc-grid{ display:grid; gap:14px; }
+.wc-grid > *{ min-width:0; }
 .wc-grid-4{ grid-template-columns:repeat(4,1fr); }
 .wc-grid-3{ grid-template-columns:repeat(3,1fr); }
 .wc-grid-2{ grid-template-columns:repeat(2,1fr); }
 @media (max-width:900px){ .wc-grid-4,.wc-grid-3{ grid-template-columns:repeat(2,1fr);} .wc-grid-2{ grid-template-columns:1fr; } }
+.wc-grid-split{ grid-template-columns:var(--split); align-items:start; }
 .wc-mt{ margin-top:18px; }
 .wc-card{
   background:var(--canyon); border:1px solid var(--border); border-radius:var(--radius);
@@ -321,6 +323,47 @@ select.wc-select option{ background:var(--canyon); color:var(--ink); }
 .wc-drill-title{ font-family:var(--font-display); font-weight:300; font-size:21px; color:var(--ink); margin-bottom:6px; }
 .wc-drill-note{ font-family:var(--font-serif); font-style:italic; font-size:14.5px; color:var(--dim); max-width:72ch; margin:0 0 14px; }
 :root[data-design="boletin"] .wc-drill-note{ font-family:'Poppins',system-ui,sans-serif; font-style:normal; font-size:14px; }
+
+
+/* ---- phone pass (720px and down) ---- */
+@media (max-width:720px){
+  /* masthead: years leave the lockup so the hamburger always fits */
+  .wc-eyebrow-years{ display:none; }
+  .wc-masthead{ padding:11px 14px; gap:10px; }
+
+  .wc-main{ padding:22px 14px 60px; }
+  .wc-title{ font-size:31px; letter-spacing:0.03em; }
+  .wc-dek{ font-size:15px; }
+  .wc-view-head{ margin-bottom:20px; }
+
+  /* every layout goes single column: the shot map, race chart and radar
+     panels take the full width, detail panels stack beneath */
+  .wc-grid-2, .wc-grid-3, .wc-grid-split{ grid-template-columns:1fr; }
+  .wc-grid-4{ grid-template-columns:repeat(2,1fr); gap:10px; }
+
+  /* bar charts: label and figures on one line, the bar full-width under
+     them, so every bar starts at the same left edge and stays comparable */
+  .wc-bar-row{ display:flex; flex-wrap:wrap; gap:3px 12px; align-items:baseline; margin-bottom:13px; }
+  .wc-bar-label{ width:auto; flex:1 1 auto; order:1; white-space:normal; overflow:visible; }
+  .wc-bar-value{ width:auto !important; order:2; }
+  .wc-bar-track{ order:3; flex:0 0 100%; height:8px; }
+
+  .wc-card{ padding:14px; }
+  .wc-stat{ padding:15px 14px; }
+  .wc-stat-value{ font-size:30px; }
+
+  /* wide tables scroll inside their card instead of squeezing */
+  .wc-table{ display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+  .wc-detail-kv{ gap:8px 16px; }
+  .wc-footer{ padding:16px 14px 22px; gap:8px 18px; }
+  .wc-scn-card{ padding:22px 18px; }
+  :root[data-view="tournament"] .wc-main::before{ height:480px; }
+}
+@media (max-width:480px){
+  /* the headline tiles stack fully once two-up starts to pinch */
+  .wc-grid-4{ grid-template-columns:1fr; }
+}
 </style>
 <style>/* ================================================================
    Second skin: Astrodata Boletín Radiante.
@@ -393,7 +436,7 @@ select.wc-select option{ background:var(--canyon); color:var(--ink); }
     <div class="wc-mark">WC</div>
     <div class="wc-title-block">
       <div class="wc-wordmark">BEND IT LIKE BLOBBY</div>
-      <div class="wc-eyebrow upper">World Cup Analytics · 2018 · 2022 · 2026</div>
+      <div class="wc-eyebrow upper">World Cup Analytics<span class="wc-eyebrow-years"> · 2018 · 2022 · 2026</span></div>
     </div>
     <button class="wc-nav-toggle" id="wc-nav-toggle" type="button"
             aria-label="Menu" aria-expanded="false" aria-controls="wc-nav">
@@ -1057,7 +1100,7 @@ var WCData = (function () {
         teams.map(function (t) { return '<option' + (TC.state.team === t ? ' selected' : '') + '>' + U.esc(t) + '</option>'; }).join('') +
         '</select><span class="wc-bar-value" style="width:auto">' + U.fmt(shots.length) + ' shots · ' + U.fmt(shots.filter(function (s) { return s.is_goal; }).length) + ' goals</span></div>';
 
-      html += '<div class="wc-grid" style="grid-template-columns: 1.6fr 1fr; align-items:start;">';
+      html += '<div class="wc-grid wc-grid-split" style="--split:1.6fr 1fr;">';
       html += '<div class="wc-pitch-wrap">' + pitchSvg(shots, selIdx) +
         '<div class="wc-legend"><span><span class="wc-dot" style="background:var(--goal)"></span>Goal</span>' +
         '<span><span class="wc-dot" style="background:var(--miss);opacity:.55"></span>No goal</span>' +
@@ -1316,7 +1359,7 @@ var WCData = (function () {
         '<button type="button" class="wc-chipbtn' + (TC.state.pos === 'all' ? ' on' : '') + '" data-pos="all">All</button>' +
         positions.map(function (p) { return '<button type="button" class="wc-chipbtn' + (TC.state.pos === p ? ' on' : '') + '" data-pos="' + U.esc(p) + '">' + U.esc(p) + '</button>'; }).join('') + '</div>';
 
-      html += '<div class="wc-grid" style="grid-template-columns: 1.35fr 1fr; align-items:start;">';
+      html += '<div class="wc-grid wc-grid-split" style="--split:1.35fr 1fr;">';
       html += '<div class="wc-card"><table class="wc-table"><thead><tr><th>Player</th><th class="num">Year</th><th class="num">Key passes</th><th class="num">Big chances</th><th class="num">Assists</th><th class="num">xA</th><th class="num">Δ</th></tr></thead><tbody>';
       rows.slice(0, 24).forEach(function (r) {
         var key = encodeURIComponent(r.name + '|' + (r.tournament_year || 'all'));
