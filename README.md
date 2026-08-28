@@ -1,4 +1,6 @@
-# World Cup Insights
+# Bend It Like Blobby
+
+World Cup analytics — 2018, 2022, 2026.
 
 Three men's World Cups — 2018, 2022 and 2026 — as one set of joined tables:
 5,937 shots with pitch position and expected-goal values, plus per-player
