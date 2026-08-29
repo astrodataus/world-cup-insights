@@ -1,0 +1,348 @@
+/* World Cup Insights — Astrodata Taliesin West Midnight design system
+   Family base shared with Trial Connect / Open to Buy / LAFC.
+   App accent: floodlight gold for goals, turquoise for expectation. */
+
+:root{
+  --paper:#0E1116;
+  --paper-deep:#07090C;
+  --canyon:#1A1D24;
+  --canyon-2:#20242C;
+  --ink:#E8E2D2;
+  --dim:#B8B0A0;
+  --faint:#6E685A;
+  --accent:#E8A33D;
+  --terracotta:#B5563A;
+  --ocotillo:#8AA66B;
+  --turquoise:#6FA8A0;
+  --pitch:#141B15;
+  --pitch-line:#2C3A2C;
+  --border:#2A2E37;
+  --border-soft:#23262E;
+  --shadow: 0 20px 50px -20px rgba(0,0,0,0.6);
+
+  --radius:6px;
+  --goal:var(--accent);
+  --miss:var(--turquoise);
+  --pos:var(--accent);
+  --neg:var(--terracotta);
+  --font-display:'Jost', system-ui, sans-serif;
+  --font-serif:'Source Serif TC Italic', Georgia, 'Times New Roman', serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+:root[data-theme="light"]{
+  --paper:#F6F2E8;
+  --paper-deep:#FFFFFF;
+  --canyon:#FFFFFF;
+  --canyon-2:#EFE9DA;
+  --ink:#211E17;
+  --dim:#5B5548;
+  --faint:#8B8471;
+  --border:#DED6C2;
+  --border-soft:#E7E0D0;
+  --shadow: 0 20px 50px -25px rgba(70,60,30,0.25);
+  --accent:#B87A1E;
+  --terracotta:#A34A31;
+  --ocotillo:#5F7F45;
+  --turquoise:#3E7D75;
+  --pitch:#EAF0E4;
+  --pitch-line:#C8D4C0;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-sans);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.upper{ text-transform:uppercase; letter-spacing:0.08em; }
+
+/* ---- shell ---- */
+.wc-shell{ min-height:100%; display:flex; flex-direction:column; }
+.wc-main{ flex:1; width:100%; max-width:1180px; margin:0 auto; padding:34px 32px 80px; }
+
+.wc-masthead{
+  display:flex; align-items:center; gap:24px; flex-wrap:nowrap;
+  padding:14px 32px; border-bottom:1px solid var(--border);
+  position:sticky; top:0; background:var(--paper); z-index:40;
+}
+.wc-mark{
+  width:34px; height:34px; flex:0 0 34px;
+  border:1px solid var(--accent); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:12px; color:var(--accent);
+}
+/* the wordmark and its tagline stay on one line at every width */
+.wc-title-block{ line-height:1.25; }
+.wc-wordmark{ font-family:var(--font-display); font-weight:300; font-size:16px; letter-spacing:0.28em; color:var(--ink); white-space:nowrap; }
+.wc-title-block .wc-eyebrow{ white-space:nowrap; }
+.wc-eyebrow{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.22em; color:var(--faint); }
+.wc-nav{ display:flex; flex-wrap:nowrap; gap:4px; margin-left:auto; align-items:center; }
+.wc-nav a{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--dim); padding:8px 12px; border-radius:4px; border:1px solid transparent; text-decoration:none; white-space:nowrap;
+}
+.wc-nav a:hover{ color:var(--ink); }
+.wc-nav a.active{ color:var(--accent); border-color:var(--accent); }
+.wc-nav-sep{ color:var(--border); }
+.wc-theme-btn{
+  border:1px solid var(--border); background:transparent; color:var(--dim);
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+  padding:7px 12px; border-radius:4px; cursor:pointer;
+}
+.wc-theme-btn:hover{ color:var(--ink); border-color:var(--dim); }
+
+/* ---- hamburger: nav collapses, the mark and wordmark never do ---- */
+.wc-nav-toggle{
+  display:none; margin-left:auto; flex:0 0 auto;
+  width:38px; height:34px; padding:0; gap:4px;
+  align-items:center; justify-content:center; flex-direction:column;
+  border:1px solid var(--border); border-radius:4px;
+  background:transparent; cursor:pointer;
+}
+.wc-nav-toggle span{
+  display:block; width:16px; height:1.5px; border-radius:2px; background:var(--dim);
+  transition:transform .18s ease, opacity .18s ease;
+}
+.wc-nav-toggle:hover{ border-color:var(--dim); }
+.wc-nav-toggle:hover span{ background:var(--ink); }
+.wc-nav-toggle[aria-expanded="true"] span:nth-child(1){ transform:translateY(5.5px) rotate(45deg); }
+.wc-nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.wc-nav-toggle[aria-expanded="true"] span:nth-child(3){ transform:translateY(-5.5px) rotate(-45deg); }
+
+@media (max-width:1160px){
+  .wc-masthead{ gap:12px; padding:12px 18px; flex-wrap:nowrap; }
+  .wc-nav-toggle{ display:flex; }
+  .wc-nav{
+    display:none; position:absolute; top:100%; left:0; right:0;
+    flex-direction:column; align-items:stretch; gap:2px; margin-left:0;
+    padding:10px 18px 14px;
+    background:var(--paper); border-bottom:1px solid var(--border);
+    box-shadow:var(--shadow);
+  }
+  .wc-nav.open{ display:flex; }
+  .wc-nav a{ padding:11px 10px; font-size:11.5px; }
+  .wc-nav-sep{ display:none; }
+  .wc-theme-btn{ align-self:flex-start; margin-top:8px; }
+  .wc-main{ padding:26px 18px 70px; }
+}
+@media (max-width:400px){
+  .wc-wordmark{ font-size:14px; letter-spacing:0.16em; }
+  .wc-title-block .wc-eyebrow{ font-size:8.5px; letter-spacing:0.14em; }
+}
+
+/* ---- view head ---- */
+.wc-view-head{ margin-bottom:26px; }
+.wc-view-eyebrow{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; color:var(--accent); margin-bottom:10px; }
+.wc-title{ font-family:var(--font-display); font-weight:200; font-size:44px; letter-spacing:0.04em; text-transform:uppercase; margin:0 0 10px; line-height:1.05; }
+.wc-dek{ font-family:var(--font-serif); font-style:italic; font-size:17px; color:var(--dim); max-width:64ch; margin:0; }
+
+/* ---- cards, stats ---- */
+.wc-grid{ display:grid; gap:14px; }
+.wc-grid > *{ min-width:0; }
+.wc-grid-4{ grid-template-columns:repeat(4,1fr); }
+.wc-grid-3{ grid-template-columns:repeat(3,1fr); }
+.wc-grid-2{ grid-template-columns:repeat(2,1fr); }
+@media (max-width:900px){ .wc-grid-4,.wc-grid-3{ grid-template-columns:repeat(2,1fr);} .wc-grid-2{ grid-template-columns:1fr; } }
+.wc-grid-split{ grid-template-columns:var(--split); align-items:start; }
+.wc-mt{ margin-top:18px; }
+.wc-card{
+  background:var(--canyon); border:1px solid var(--border); border-radius:var(--radius);
+  padding:20px 22px;
+}
+.wc-stat{ padding:18px; }
+.wc-stat-value{ font-family:var(--font-display); font-weight:200; font-size:38px; color:var(--accent); line-height:1; }
+.wc-stat-label{ font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.08em; color:var(--faint); margin-top:8px; }
+.wc-section-label{
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--faint); margin:34px 0 12px; padding-bottom:8px; border-bottom:1px solid var(--border);
+}
+.wc-note{ font-family:var(--font-serif); font-style:italic; font-size:14.5px; color:var(--dim); max-width:72ch; }
+
+/* ---- filter rail ---- */
+.wc-filters{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:18px 0 6px; }
+.wc-filter-label{ font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--faint); margin-right:2px; }
+.wc-chipbtn{
+  border:1px solid var(--border); background:transparent; color:var(--dim);
+  font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em;
+  padding:6px 12px; border-radius:20px; cursor:pointer;
+}
+.wc-chipbtn:hover{ color:var(--ink); border-color:var(--dim); }
+.wc-chipbtn.on{ color:var(--paper-deep); background:var(--accent); border-color:var(--accent); }
+select.wc-select{
+  background:var(--canyon); color:var(--ink); border:1px solid var(--border); border-radius:4px;
+  font-family:var(--font-mono); font-size:11.5px; padding:6px 10px;
+}
+
+/* ---- bars ---- */
+.wc-bar-row{ display:flex; align-items:center; gap:12px; margin-bottom:9px; }
+.wc-bar-label{ font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; color:var(--dim); width:150px; flex:0 0 auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wc-bar-track{ flex:1; height:10px; background:var(--paper-deep); border-radius:3px; overflow:hidden; }
+.wc-bar-fill{ height:100%; background:var(--accent); border-radius:3px; }
+.wc-bar-fill-alt{ background:var(--turquoise); }
+.wc-bar-value{ font-family:var(--font-mono); font-size:11px; color:var(--dim); width:56px; text-align:right; }
+
+/* ---- tables ---- */
+.wc-table{ width:100%; border-collapse:collapse; font-size:13px; }
+.wc-table th{
+  font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;
+  color:var(--faint); text-align:left; padding:8px 10px; border-bottom:1px solid var(--border);
+  cursor:pointer; user-select:none; white-space:nowrap;
+}
+.wc-table th.num{ text-align:right; }
+.wc-table td{ padding:8px 10px; border-bottom:1px solid var(--border-soft); color:var(--dim); }
+.wc-table td.num{ text-align:right; font-family:var(--font-mono); font-size:12px; }
+.wc-table tr.sel td, .wc-table tbody tr:hover td{ color:var(--ink); background:var(--canyon-2); }
+.wc-table tbody tr{ cursor:pointer; }
+.wc-pos-tag{
+  display:inline-block; font-family:var(--font-mono); font-size:9.5px; letter-spacing:0.08em;
+  border:1px solid var(--border); border-radius:10px; padding:1px 8px; color:var(--faint); text-transform:uppercase;
+}
+
+/* ---- pitch ---- */
+.wc-pitch-wrap{ background:var(--pitch); border:1px solid var(--border); border-radius:var(--radius); padding:10px; }
+.wc-pitch-line{ stroke:var(--pitch-line); stroke-width:1.2; fill:none; }
+.wc-shot{ stroke:none; opacity:0.75; cursor:pointer; }
+.wc-shot.goal{ fill:var(--goal); }
+.wc-shot.miss{ fill:var(--miss); opacity:0.45; }
+.wc-shot.sel{ stroke:var(--ink); stroke-width:1.5; opacity:1; }
+.wc-legend{ display:flex; gap:18px; align-items:center; font-family:var(--font-mono); font-size:10.5px; color:var(--faint); text-transform:uppercase; letter-spacing:0.08em; margin-top:8px; }
+.wc-dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:-1px; }
+
+/* ---- charts (generic svg) ---- */
+.wc-chart-card svg text{ font-family:var(--font-mono); font-size:10px; fill:var(--faint); }
+.wc-axis{ stroke:var(--border); stroke-width:1; }
+.wc-gridline{ stroke:var(--border-soft); stroke-width:0.6; }
+
+/* ---- detail panel ---- */
+.wc-detail{
+  background:var(--canyon); border:1px solid var(--accent); border-radius:var(--radius);
+  padding:20px 24px; margin-top:14px;
+}
+.wc-detail-title{ font-family:var(--font-display); font-weight:300; font-size:20px; color:var(--ink); margin-bottom:4px; }
+.wc-detail-kv{ display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:10px; }
+.wc-kv{ font-family:var(--font-mono); font-size:11.5px; color:var(--dim); }
+.wc-kv b{ color:var(--ink); font-weight:500; }
+
+/* ---- scenario modal ---- */
+.wc-scn-back{ position:fixed; inset:0; background:rgba(7,9,12,.72); z-index:90; }
+.wc-scn-card{
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:min(680px, calc(100vw - 40px)); max-height:82vh; overflow-y:auto;
+  background:var(--canyon); border:1px solid var(--accent); border-radius:8px;
+  padding:30px 34px; z-index:91; box-shadow:var(--shadow);
+}
+.wc-scn-kicker{ font-family:var(--font-mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); margin:0 0 6px; }
+.wc-scn-title{ font-family:var(--font-display); font-weight:200; font-size:30px; text-transform:uppercase; letter-spacing:.04em; margin:0 0 12px; }
+.wc-scn-card p{ color:var(--dim); font-size:14.5px; }
+.wc-scn-card h4{ font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink); margin:18px 0 6px; font-weight:500; }
+.wc-scn-close{
+  position:absolute; top:14px; right:16px; background:none; border:none; cursor:pointer;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--dim);
+}
+.wc-scn-close:hover{ color:var(--ink); }
+
+/* ---- footer ---- */
+.wc-footer{
+  border-top:1px solid var(--border); padding:18px 32px 26px;
+  display:flex; flex-wrap:wrap; gap:8px 26px; align-items:baseline;
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--faint);
+}
+.wc-footer strong{ color:var(--dim); font-weight:400; }
+.wc-footer a{ color:var(--dim); text-decoration:none; border-bottom:1px solid var(--border); }
+.wc-footer .wc-disclaimer{ color:var(--dim); flex-basis:100%; text-transform:none; letter-spacing:0; font-size:12px; font-family:var(--font-sans); padding-bottom:4px; }
+
+/* ---- landing hero background (The Tournament), knocked back ---- */
+:root[data-view="tournament"] .wc-main{ position:relative; }
+:root[data-view="tournament"] .wc-main::before{
+  content:""; position:absolute; inset:0 0 auto 0; height:760px;
+  background-image:/*__HERO_IMG__*/none;
+  background-size:cover; background-position:center 30%;
+  opacity:0.14; pointer-events:none; z-index:-1;
+  -webkit-mask-image:linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+  mask-image:linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+}
+:root[data-view="tournament"][data-theme="light"] .wc-main::before{ opacity:0.12; }
+
+/* ---- select styling: themed ground, custom caret nudged 6px left ---- */
+select.wc-select{
+  -webkit-appearance:none; appearance:none;
+  background-color:var(--canyon);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23B8B0A0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 14px center; /* default 8px inset, moved 6px further left */
+  padding:7px 32px 7px 12px;
+  border:1px solid var(--border); border-radius:4px;
+  color:var(--ink); cursor:pointer;
+}
+select.wc-select:hover{ border-color:var(--dim); }
+select.wc-select:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+select.wc-select option{ background:var(--canyon); color:var(--ink); }
+:root[data-theme="light"] select.wc-select{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%235B5548' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+}
+
+/* ---- stat tile drill-ins (The Tournament) ---- */
+.wc-stat-drill{ cursor:pointer; transition:border-color .15s ease; }
+.wc-stat-drill:hover{ border-color:var(--accent); }
+.wc-stat-drill:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.wc-stat-open{ border-color:var(--accent); }
+.wc-stat-hint{
+  font-family:var(--font-mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--faint); margin-top:10px;
+}
+.wc-stat-drill:hover .wc-stat-hint, .wc-stat-open .wc-stat-hint{ color:var(--accent); }
+.wc-drill{
+  background:var(--canyon); border:1px solid var(--accent); border-radius:var(--radius);
+  padding:22px 24px; margin-top:14px;
+}
+.wc-drill-title{ font-family:var(--font-display); font-weight:300; font-size:21px; color:var(--ink); margin-bottom:6px; }
+.wc-drill-note{ font-family:var(--font-serif); font-style:italic; font-size:14.5px; color:var(--dim); max-width:72ch; margin:0 0 14px; }
+:root[data-design="boletin"] .wc-drill-note{ font-family:'Poppins',system-ui,sans-serif; font-style:normal; font-size:14px; }
+
+
+/* ---- phone pass (720px and down) ---- */
+@media (max-width:720px){
+  /* masthead: years leave the lockup so the hamburger always fits */
+  .wc-eyebrow-years{ display:none; }
+  .wc-masthead{ padding:11px 14px; gap:10px; }
+
+  .wc-main{ padding:22px 14px 60px; }
+  .wc-title{ font-size:31px; letter-spacing:0.03em; }
+  .wc-dek{ font-size:15px; }
+  .wc-view-head{ margin-bottom:20px; }
+
+  /* every layout goes single column: the shot map, race chart and radar
+     panels take the full width, detail panels stack beneath */
+  .wc-grid-2, .wc-grid-3, .wc-grid-split{ grid-template-columns:1fr; }
+  .wc-grid-4{ grid-template-columns:repeat(2,1fr); gap:10px; }
+
+  /* bar charts: label and figures on one line, the bar full-width under
+     them, so every bar starts at the same left edge and stays comparable */
+  .wc-bar-row{ display:flex; flex-wrap:wrap; gap:3px 12px; align-items:baseline; margin-bottom:13px; }
+  .wc-bar-label{ width:auto; flex:1 1 auto; order:1; white-space:normal; overflow:visible; }
+  .wc-bar-value{ width:auto !important; order:2; }
+  .wc-bar-track{ order:3; flex:0 0 100%; height:8px; }
+
+  .wc-card{ padding:14px; }
+  .wc-stat{ padding:15px 14px; }
+  .wc-stat-value{ font-size:30px; }
+
+  /* wide tables scroll inside their card instead of squeezing */
+  .wc-table{ display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+
+  .wc-detail-kv{ gap:8px 16px; }
+  .wc-footer{ padding:16px 14px 22px; gap:8px 18px; }
+  .wc-scn-card{ padding:22px 18px; }
+  :root[data-view="tournament"] .wc-main::before{ height:480px; }
+}
+@media (max-width:480px){
+  /* the headline tiles stack fully once two-up starts to pinch */
+  .wc-grid-4{ grid-template-columns:1fr; }
+}

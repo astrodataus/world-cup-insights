@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bend It Like Blobby — Astrodata</title>
+<meta name="description" content="Three World Cups of shots, finishing and creation, read from one set of joined tables. Built by Ethan Elias, design by Astrodata.">
+<style>/*__FONTS__*/</style>
+<style>/*__APP_CSS__*/</style>
+<style>/*__DESIGNS_CSS__*/</style>
+</head>
+<body>
+<div class="wc-shell">
+  <header class="wc-masthead">
+    <div class="wc-mark">WC</div>
+    <div class="wc-title-block">
+      <div class="wc-wordmark">BEND IT LIKE BLOBBY</div>
+      <div class="wc-eyebrow upper">World Cup Analytics<span class="wc-eyebrow-years"> · 2018 · 2022 · 2026</span></div>
+    </div>
+    <button class="wc-nav-toggle" id="wc-nav-toggle" type="button"
+            aria-label="Menu" aria-expanded="false" aria-controls="wc-nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="wc-nav" id="wc-nav">
+      <a href="#/tournament" data-view="tournament">The Tournament</a>
+      <a href="#/pitch" data-view="pitch">The Pitch</a>
+      <a href="#/finishing" data-view="finishing">Finishing</a>
+      <a href="#/race" data-view="race">The Race</a>
+      <a href="#/creators" data-view="creators">Creators</a>
+      <span class="wc-nav-sep">|</span>
+      <a href="#" id="wc-nav-scenario">Scenario</a>
+      <button class="wc-theme-btn" id="wc-theme-btn" type="button">Light</button>
+    </nav>
+  </header>
+
+  <main class="wc-main" id="wc-root">
+    <div style="font-family:var(--font-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:80px 0;text-align:center;">Loading tournament data…</div>
+  </main>
+
+  <div id="wc-scenario" hidden>
+    <div class="wc-scn-back" data-scn-close></div>
+    <div class="wc-scn-card" role="dialog" aria-modal="true" aria-label="Scenario">
+      <button class="wc-scn-close" type="button" data-scn-close>Close</button>
+      <p class="wc-scn-kicker">Scenario</p>
+      <h2 class="wc-scn-title">You scout for a national side</h2>
+      <p>You are an analyst on a national team's staff, preparing for the next tournament. Three World Cups of shots, finishing and creation sit in front of you as one set of joined tables: every shot with its position and expected-goal value, every player's output against what their chances were worth. The question is always the same. Who is producing, who has been riding luck, and where do goals actually come from?</p>
+      <h4>The data</h4>
+      <p>Public match data for the 2018, 2022 and 2026 men's World Cups, parsed into five tables: shots (with pitch position, minute and xG), matches, players, teams and per-player tournament stats. Nothing here is invented; every figure on screen is recomputed from the raw files by an automated check before it ships.</p>
+      <h4>The views</h4>
+      <p><b>The Tournament</b> is the standings of shooting: how many shots, goals and expected goals each tournament produced, and where the danger comes from. <b>The Pitch</b> draws every shot where it was taken; click one and it explains itself. <b>Finishing</b> puts goals against expected goals, so over- and under-performers separate. <b>The Race</b> replays a match as cumulative xG, minute by minute. <b>Creators</b> ranks the players who make chances rather than take them.</p>
+      <p>A demo, not a scouting department. But if your business has events with a value attached, this is the same product.</p>
+    </div>
+  </div>
+
+  <footer class="wc-footer">
+    <span><strong>Bend It Like Blobby</strong></span>
+    <span>Built by Ethan Elias</span>
+    <span>Design: Astrodata</span>
+    <span id="wc-meta-line">Match data, three tournaments</span>
+    <span>Photo: <a href="https://unsplash.com/photos/70YxSTWa2Zw" target="_blank" rel="noopener">Mario Klassen / Unsplash</a></span>
+    <button class="wc-design-toggle" id="wc-design-toggle" type="button">Design: Taliesin</button>
+    <span class="wc-disclaimer">A demo on public match data. Expected goals (xG) is a probability a chance is scored, estimated from historical shots; it is a lens, not a verdict.</span>
+  </footer>
+</div>
+<script>/*__DATA_LOADER__*/</script>
+<script>/*__APP_JS__*/</script>
+</body>
+</html>
